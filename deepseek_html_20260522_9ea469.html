@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no">
+    <title>Nothing X · Universal Desktop Studio</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;500;600;700;800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            background: #05070A;
+            font-family: 'Inter', sans-serif;
+            color: #EFF3F8;
+            padding: 24px 20px;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nothing-x-app {
+            max-width: 1440px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(8, 11, 15, 0.92);
+            backdrop-filter: blur(4px);
+            border-radius: 2.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 30px 50px -20px rgba(0,0,0,0.9), inset 0 1px 0 rgba(255,255,255,0.03);
+            overflow: hidden;
+        }
+
+        .app-header {
+            padding: 1rem 2rem;
+            border-bottom: 1px solid #1E2329;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            background: #080B10;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+        .glyph-icon {
+            background: #FFFFFF;
+            width: 40px;
+            height: 40px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 800;
+            font-size: 24px;
+            color: #000;
+        }
+        .logo-text {
+            font-weight: 700;
+            font-size: 1.7rem;
+            letter-spacing: -0.8px;
+            background: linear-gradient(135deg, #FFFFFF 60%, #A0A8B2 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .device-info {
+            display: flex;
+            align-items: center;
+            gap: 18px;
+            background: #11161C;
+            padding: 6px 20px;
+            border-radius: 60px;
+            border: 0.5px solid #2A313A;
+        }
+        .model-selector {
+            background: #1B2128;
+            border: none;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            cursor: pointer;
+            font-family: inherit;
+        }
+        .connect-btn {
+            background: #1F2A33;
+            border: none;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .connect-btn.connected {
+            background: #2adf6b;
+            color: #000;
+        }
+        .battery-pill {
+            background: #1B2128;
+            padding: 4px 12px;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 2rem;
+            padding: 2rem;
+        }
+
+        .device-panel {
+            background: #0F1319;
+            border-radius: 2rem;
+            border: 1px solid #20252C;
+            padding: 1.6rem;
+            transition: all 0.2s;
+        }
+        .earbuds-visual {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .bud-card {
+            text-align: center;
+            width: 150px;
+            background: #0A0E12;
+            border-radius: 2rem;
+            padding: 1rem 0.8rem;
+            border: 1px solid #232A32;
+            transition: all 0.25s;
+        }
+        .bud-icon {
+            font-size: 3rem;
+            color: #E0E4EC;
+            margin-bottom: 12px;
+        }
+        .battery-level {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 8px 0;
+        }
+        .charging-case {
+            background: #0A0E12;
+            border-radius: 1.5rem;
+            padding: 1rem;
+            text-align: center;
+            border: 1px solid #232A32;
+            margin-top: 16px;
+        }
+
+        .cmf-knob-section {
+            margin-top: 1.8rem;
+            background: linear-gradient(145deg, #0B0F14, #080B0F);
+            border-radius: 2rem;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1px solid #2A2F38;
+        }
+        .knob-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin: 0 auto;
+            cursor: grab;
+        }
+        .knob-dial {
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 30%, #2C3540, #11161C);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .settings-section {
+            background: #0F1319;
+            border-radius: 2rem;
+            border: 1px solid #20252C;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+        .section-title {
+            padding: 1rem 1.5rem;
+            background: #0B0F14;
+            font-weight: 600;
+            border-bottom: 1px solid #20252C;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .section-content {
+            padding: 1.2rem 1.5rem;
+        }
+
+        .anc-modes {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+        .anc-btn {
+            flex: 1;
+            background: #181F26;
+            border: none;
+            padding: 10px 0;
+            border-radius: 60px;
+            color: #BDC4D0;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .anc-btn.active {
+            background: #FFFFFF;
+            color: #000000;
+        }
+        .eq-bands {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin: 20px 0;
+        }
+        .eq-band {
+            text-align: center;
+            flex: 1;
+            min-width: 60px;
+        }
+        input[type="range"] {
+            width: 100%;
+            background: #2A313A;
+            height: 5px;
+            border-radius: 5px;
+            -webkit-appearance: none;
+        }
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: white;
+            cursor: pointer;
+        }
+        .preset-btn {
+            background: #1A2129;
+            border: none;
+            padding: 7px 16px;
+            border-radius: 40px;
+            color: #CBD5E1;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .toggle-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .toggle-switch {
+            width: 48px;
+            height: 26px;
+            background: #2A313C;
+            border-radius: 30px;
+            position: relative;
+            cursor: pointer;
+        }
+        .toggle-switch.active {
+            background: #FFFFFF;
+        }
+        .toggle-knob {
+            width: 22px;
+            height: 22px;
+            background: #111;
+            border-radius: 50%;
+            position: absolute;
+            top: 2px;
+            left: 2px;
+            transition: left 0.2s;
+        }
+        .toggle-switch.active .toggle-knob {
+            left: 24px;
+        }
+        .find-btn {
+            background: #212A33;
+            border: none;
+            color: white;
+            padding: 12px;
+            border-radius: 60px;
+            width: 100%;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 12px;
+        }
+        .gesture-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        .gesture-col {
+            background: #0A0E13;
+            border-radius: 1.5rem;
+            padding: 1rem;
+        }
+        .gesture-item select {
+            width: 100%;
+            background: #1B222A;
+            border: 1px solid #2E3740;
+            color: white;
+            padding: 8px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+        }
+        .footer-meta {
+            padding: 1rem 2rem;
+            border-top: 1px solid #1E2329;
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.7rem;
+            color: #6F7883;
+        }
+        @media (max-width: 900px) {
+            .two-columns { grid-template-columns: 1fr; }
+        }
+        .status-badge {
+            font-size: 0.7rem;
+            background: #1F2A33;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+        }
+        .hidden-feature {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<div class="nothing-x-app">
+    <div class="app-header">
+        <div class="logo-area">
+            <div class="glyph-icon">⨀</div>
+            <div class="logo-text">Nothing X</div>
+        </div>
+        <div class="device-info">
+            <select id="modelSelect" class="model-selector">
+                <option value="ear2">Nothing Ear (2)</option>
+                <option value="ear-a">Nothing Ear (a)</option>
+                <option value="cmf">CMF Buds Pro 2</option>
+            </select>
+            <button id="connectBtn" class="connect-btn"><i class="fas fa-bluetooth"></i> Connect</button>
+            <div class="battery-pill"><i class="fas fa-battery-full"></i> <span id="caseBatterySpan">--</span></div>
+        </div>
+    </div>
+
+    <div class="two-columns">
+        <!-- LEFT PANEL (dynamic per model) -->
+        <div class="device-panel" id="leftPanel">
+            <div class="earbuds-visual">
+                <div class="bud-card" id="leftBudCard">
+                    <div class="bud-icon"><i class="fas fa-head-side-headphones"></i></div>
+                    <div class="bud-label">LEFT EARBUD</div>
+                    <div class="battery-level" id="leftBattery">--</div>
+                    <div class="status-badge" id="leftStatus">disconnected</div>
+                </div>
+                <div class="bud-card" id="rightBudCard">
+                    <div class="bud-icon"><i class="fas fa-head-side-headphones"></i></div>
+                    <div class="bud-label">RIGHT EARBUD</div>
+                    <div class="battery-level" id="rightBattery">--</div>
+                    <div class="status-badge" id="rightStatus">disconnected</div>
+                </div>
+            </div>
+            <div class="charging-case">
+                <i class="fas fa-charging-station"></i> Charging Case · <span id="caseBatteryLarge">--</span>
+                <div id="caseExtra" style="font-size:0.65rem; margin-top: 4px;"></div>
+            </div>
+            <div id="modelSpecificPanel"></div>
+        </div>
+
+        <!-- RIGHT PANEL (controls) -->
+        <div>
+            <!-- ANC SECTION -->
+            <div class="settings-section">
+                <div class="section-title"><i class="fas fa-volume-down"></i> Active Noise Cancellation</div>
+                <div class="section-content">
+                    <div class="anc-modes">
+                        <button class="anc-btn" data-anc="off">OFF</button>
+                        <button class="anc-btn active" data-anc="anc">ANC</button>
+                        <button class="anc-btn" data-anc="transparency">Transparency</button>
+                    </div>
+                    <div class="anc-intensity">
+                        <label>Intensity <span id="ancIntensityValue">82%</span></label>
+                        <input type="range" id="ancIntensitySlider" min="0" max="100" value="82">
+                    </div>
+                    <div id="ancStatusMsg" style="font-size: 0.75rem; margin-top: 8px;">🌊 Adaptive ANC active</div>
+                </div>
+            </div>
+
+            <!-- EQ SECTION -->
+            <div class="settings-section">
+                <div class="section-title"><i class="fas fa-sliders-h"></i> Equalizer</div>
+                <div class="section-content">
+                    <div class="eq-bands">
+                        <div class="eq-band"><label>32Hz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>64Hz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>125Hz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>250Hz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>500Hz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>1kHz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>4kHz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                        <div class="eq-band"><label>8kHz</label><input type="range" min="-12" max="12" value="0" class="eq-slider"></div>
+                    </div>
+                    <div id="bassControlContainer" class="bass-control" style="background:#0B0F15; margin-top:16px; padding:12px; border-radius:1.2rem;">
+                        <div style="display: flex; justify-content: space-between;"><span><i class="fas fa-bass"></i> Bass Boost</span><span id="bassBoostVal">0 dB</span></div>
+                        <input type="range" id="bassBoostSlider" min="-6" max="12" value="0">
+                    </div>
+                    <div class="eq-presets" id="eqPresets"></div>
+                    <div style="font-size:0.7rem; margin-top: 12px;">Profile: <span id="eqCurveName">Custom</span></div>
+                </div>
+            </div>
+
+            <!-- GESTURE CONTROLS -->
+            <div class="settings-section">
+                <div class="section-title"><i class="fas fa-hand-peace"></i> Gesture Controls</div>
+                <div class="section-content">
+                    <div class="gesture-grid" id="gestureGrid"></div>
+                    <div class="gesture-feedback-area" style="margin-top: 20px; text-align: center; font-size:0.7rem;">
+                        <div id="gestureLiveFeedback">✨ Tap test button below to simulate gesture</div>
+                        <div style="margin-top: 8px;"><button id="testLeftGesture" class="test-btn">Test Left</button> <button id="testRightGesture" class="test-btn">Test Right</button></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SYSTEM & EXTRA -->
+            <div class="settings-section">
+                <div class="section-title"><i class="fas fa-cog"></i> System & Extra</div>
+                <div class="section-content">
+                    <div class="toggle-row"><span>In-ear detection</span><div id="inEarToggle" class="toggle-switch active"><div class="toggle-knob"></div></div></div>
+                    <div class="toggle-row"><span>Low latency game mode</span><div id="latencyToggle" class="toggle-switch"><div class="toggle-knob"></div></div></div>
+                    <div class="toggle-row"><span>Wind noise reduction</span><div id="windToggle" class="toggle-switch active"><div class="toggle-knob"></div></div></div>
+                    <div id="extraFeatureToggle" class="toggle-row"><span>Spatial Audio</span><div id="spatialToggle" class="toggle-switch"><div class="toggle-knob"></div></div></div>
+                    <button id="findMyBudsBtn" class="find-btn"><i class="fas fa-location-dot"></i> Find My Earbuds</button>
+                    <div style="margin-top: 14px; font-size:0.65rem; display:flex; justify-content:space-between;"><span id="codecInfo">Codec: AAC</span><span id="firmwareVersion">Firmware: v2.0</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-meta"><span>Nothing X · Universal Desktop Studio</span><span><i class="fas fa-bluetooth"></i> Bluetooth ready</span></div>
+</div>
+
+<script>
+    // Model definitions
+    const models = {
+        ear2: { name: "Nothing Ear (2)", color: "#fff", features: { bass: true, spatial: true, codec: "LHDC 5.0", firmware: "v3.0.2", knob: false, caseCapacity: "~2.5 charges" } },
+        "ear-a": { name: "Nothing Ear (a)", color: "#f5a623", features: { bass: true, spatial: true, codec: "LDAC", firmware: "v2.1.0", knob: false, caseCapacity: "~2 charges" } },
+        cmf: { name: "CMF Buds Pro 2", color: "#00b4d8", features: { bass: true, spatial: true, codec: "AAC/SBC", firmware: "v1.5.2", knob: true, caseCapacity: "~3 charges" } }
+    };
+
+    let currentModel = "ear2";
+    let isConnected = false;
+    let batteryLevels = { left: 98, right: 97, case: 96 };
+
+    // DOM elements
+    const modelSelect = document.getElementById('modelSelect');
+    const connectBtn = document.getElementById('connectBtn');
+    const leftBatterySpan = document.getElementById('leftBattery');
+    const rightBatterySpan = document.getElementById('rightBattery');
+    const caseBatterySpan = document.getElementById('caseBatterySpan');
+    const caseBatteryLarge = document.getElementById('caseBatteryLarge');
+    const leftStatusSpan = document.getElementById('leftStatus');
+    const rightStatusSpan = document.getElementById('rightStatus');
+    const modelSpecificPanel = document.getElementById('modelSpecificPanel');
+    const bassControlContainer = document.getElementById('bassControlContainer');
+    const extraFeatureToggleRow = document.getElementById('extraFeatureToggle');
+    const codecSpan = document.getElementById('codecInfo');
+    const firmwareSpan = document.getElementById('firmwareVersion');
+    const eqPresetsContainer = document.getElementById('eqPresets');
+    const gestureGrid = document.getElementById('gestureGrid');
+
+    // Helper: update UI based on model and connection
+    function updateUIForModel() {
+        const model = models[currentModel];
+        document.querySelector('.device-name').innerText = model.name + (isConnected ? " · Connected" : " · Disconnected");
+        // Show/hide CMF knob
+        if (model.features.knob) {
+            modelSpecificPanel.innerHTML = `<div class="cmf-knob-section"><div class="knob-title"><i class="fas fa-cog"></i> Smart Dial</div><div class="knob-container" id="volumeKnob"><div class="knob-dial"><i class="fas fa-volume-up"></i></div></div><div class="knob-value"><span id="knobVolumePercent">72</span>%</div></div>`;
+            initKnob();
+        } else {
+            modelSpecificPanel.innerHTML = `<div class="charging-case" style="margin-top:0;"><i class="fas fa-info-circle"></i> ${model.features.caseCapacity} · Wireless charging</div>`;
+        }
+        // Bass control visibility
+        bassControlContainer.style.display = model.features.bass ? "block" : "none";
+        extraFeatureToggleRow.style.display = model.features.spatial ? "flex" : "none";
+        codecSpan.innerText = `Codec: ${model.features.codec}`;
+        firmwareSpan.innerText = `Firmware: ${model.features.firmware}`;
+        // Update EQ presets (model-specific)
+        const presets = ['Balanced', 'Bass Boost', 'Treble', 'Vocal'];
+        if (currentModel === 'cmf') presets.push('CMF Signature');
+        else if (currentModel === 'ear2') presets.push('LHDC Enhanced');
+        else presets.push('Spatial Audio');
+        eqPresetsContainer.innerHTML = presets.map(p => `<button class="preset-btn" data-preset="${p.toLowerCase().replace(' ', '-')}">${p}</button>`).join('');
+        // Gesture options (different for CMF)
+        gestureGrid.innerHTML = `
+            <div class="gesture-col"><div class="gesture-header">LEFT EARBUD</div>
+                <div class="gesture-item"><select id="leftDouble"><option>Next track</option><option>Previous track</option><option>Volume +</option><option>Voice assistant</option></select></div>
+                <div class="gesture-item"><select id="leftTriple"><option>Previous track</option><option>Next track</option><option>Volume -</option></select></div>
+                <div class="gesture-item"><select id="leftHold"><option>ANC cycle</option><option>Game mode</option></select></div>
+            </div>
+            <div class="gesture-col"><div class="gesture-header">RIGHT EARBUD</div>
+                <div class="gesture-item"><select id="rightDouble"><option>Next track</option><option>Previous track</option><option>Volume +</option></select></div>
+                <div class="gesture-item"><select id="rightTriple"><option>Previous track</option><option>Voice assistant</option></select></div>
+                <div class="gesture-item"><select id="rightHold"><option>ANC cycle</option><option>Low latency</option></select></div>
+            </div>`;
+    }
+
+    // Simulate Bluetooth connection
+    function toggleConnection() {
+        if (!isConnected) {
+            connectBtn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Connecting...';
+            setTimeout(() => {
+                isConnected = true;
+                connectBtn.innerHTML = '<i class="fas fa-bluetooth-b"></i> Connected';
+                connectBtn.classList.add('connected');
+                // Randomize batteries
+                batteryLevels = { left: 85 + Math.floor(Math.random() * 15), right: 85 + Math.floor(Math.random() * 15), case: 70 + Math.floor(Math.random() * 25) };
+                updateBatteryDisplay();
+                leftStatusSpan.innerText = 'active';
+                rightStatusSpan.innerText = 'active';
+                showToast('Bluetooth connected · CMF Buds Pro 2 paired');
+                updateUIForModel(); // refresh name
+            }, 800);
+        } else {
+            isConnected = false;
+            connectBtn.innerHTML = '<i class="fas fa-bluetooth"></i> Connect';
+            connectBtn.classList.remove('connected');
+            leftBatterySpan.innerText = '--';
+            rightBatterySpan.innerText = '--';
+            caseBatterySpan.innerText = '--';
+            caseBatteryLarge.innerText = '--';
+            leftStatusSpan.innerText = 'disconnected';
+            rightStatusSpan.innerText = 'disconnected';
+            showToast('Disconnected');
+            updateUIForModel();
+        }
+    }
+
+    function updateBatteryDisplay() {
+        if (isConnected) {
+            leftBatterySpan.innerText = batteryLevels.left + '%';
+            rightBatterySpan.innerText = batteryLevels.right + '%';
+            caseBatterySpan.innerText = batteryLevels.case + '%';
+            caseBatteryLarge.innerText = batteryLevels.case + '%';
+        } else {
+            leftBatterySpan.innerText = '--';
+            rightBatterySpan.innerText = '--';
+            caseBatterySpan.innerText = '--';
+            caseBatteryLarge.innerText = '--';
+        }
+    }
+
+    function showToast(msg) {
+        let t = document.createElement('div');
+        t.innerText = msg;
+        t.style.cssText = `position:fixed; bottom:30px; right:24px; background:#1A202A; backdrop-filter:blur(16px); padding:10px 20px; border-radius:40px; font-size:0.75rem; z-index:999; border:1px solid #2E3A44;`;
+        document.body.appendChild(t);
+        setTimeout(() => t.remove(), 2000);
+    }
+
+    // Rotary knob init
+    function initKnob() {
+        const knob = document.getElementById('volumeKnob');
+        if (!knob) return;
+        let currentVol = 72, dragging = false, startY = 0, startVol = 72;
+        const volSpan = document.getElementById('knobVolumePercent');
+        knob.addEventListener('mousedown', (e) => { dragging = true; startY = e.clientY; startVol = currentVol; e.preventDefault(); });
+        window.addEventListener('mousemove', (e) => {
+            if (!dragging) return;
+            let delta = startY - e.clientY;
+            let newVol = startVol + delta * 0.5;
+            newVol = Math.min(100, Math.max(0, newVol));
+            currentVol = Math.floor(newVol);
+            if (volSpan) volSpan.innerText = currentVol;
+        });
+        window.addEventListener('mouseup', () => { dragging = false; });
+    }
+
+    // ANC
+    const ancBtns = document.querySelectorAll('.anc-btn');
+    const ancMsg = document.getElementById('ancStatusMsg');
+    const ancIntensity = document.getElementById('ancIntensitySlider');
+    const ancIntensityVal = document.getElementById('ancIntensityValue');
+    ancBtns.forEach(btn => btn.addEventListener('click', () => {
+        ancBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        let mode = btn.getAttribute('data-anc');
+        let intensity = ancIntensity.value;
+        if (mode === 'off') ancMsg.innerHTML = 'ANC OFF · passive isolation';
+        else if (mode === 'anc') ancMsg.innerHTML = `🌊 Hybrid ANC · intensity ${intensity}%`;
+        else ancMsg.innerHTML = `🎧 Transparency · gain ${intensity}%`;
+    }));
+    ancIntensity.addEventListener('input', () => {
+        ancIntensityVal.innerText = ancIntensity.value + '%';
+        let active = document.querySelector('.anc-btn.active').getAttribute('data-anc');
+        if (active !== 'off') ancMsg.innerHTML = active === 'anc' ? `🌊 ANC intensity ${ancIntensity.value}%` : `🎧 Transparency gain ${ancIntensity.value}%`;
+    });
+
+    // EQ sliders & presets
+    const eqSliders = document.querySelectorAll('.eq-slider');
+    const eqCurveSpan = document.getElementById('eqCurveName');
+    const bassSlider = document.getElementById('bassBoostSlider');
+    const bassValSpan = document.getElementById('bassBoostVal');
+    function updateBass() { if(bassSlider) bassValSpan.innerText = (bassSlider.value > 0 ? '+' : '') + bassSlider.value + ' dB'; }
+    if(bassSlider) bassSlider.addEventListener('input', () => { updateBass(); eqCurveSpan.innerText = 'Custom'; });
+    eqSliders.forEach(s => s.addEventListener('input', () => eqCurveSpan.innerText = 'Custom'));
+    document.addEventListener('click', (e) => {
+        if (e.target.classList && e.target.classList.contains('preset-btn')) {
+            eqSliders.forEach(s => s.value = 0);
+            if(bassSlider) bassSlider.value = 0;
+            updateBass();
+            eqCurveSpan.innerText = e.target.innerText;
+        }
+    });
+
+    // Toggles
+    const toggles = ['inEarToggle', 'latencyToggle', 'windToggle', 'spatialToggle'];
+    toggles.forEach(id => {
+        let el = document.getElementById(id);
+        if (el) el.addEventListener('click', () => { el.classList.toggle('active'); showToast(`${id.replace('Toggle','')} ${el.classList.contains('active') ? 'enabled' : 'disabled'}`); });
+    });
+
+    // Find my buds
+    document.getElementById('findMyBudsBtn').addEventListener('click', () => {
+        if (!isConnected) { showToast('Connect earbuds first'); return; }
+        showToast('🔊 Earbuds ringing — listen closely');
+    });
+
+    // Gesture test
+    document.getElementById('testLeftGesture').addEventListener('click', () => showToast('Left earbud gesture simulated'));
+    document.getElementById('testRightGesture').addEventListener('click', () => showToast('Right earbud gesture simulated'));
+
+    // Model switch
+    modelSelect.addEventListener('change', (e) => {
+        currentModel = e.target.value;
+        updateUIForModel();
+        if (isConnected) showToast(`Switched to ${models[currentModel].name}`);
+    });
+
+    connectBtn.addEventListener('click', toggleConnection);
+
+    // Initial load
+    updateUIForModel();
+    updateBatteryDisplay();
+    setInterval(() => {
+        if (isConnected) {
+            batteryLevels.left = Math.max(0, batteryLevels.left - Math.random() * 0.5);
+            batteryLevels.right = Math.max(0, batteryLevels.right - Math.random() * 0.5);
+            batteryLevels.case = Math.max(0, batteryLevels.case - Math.random() * 0.3);
+            batteryLevels.left = Math.floor(batteryLevels.left);
+            batteryLevels.right = Math.floor(batteryLevels.right);
+            batteryLevels.case = Math.floor(batteryLevels.case);
+            updateBatteryDisplay();
+        }
+    }, 30000);
+</script>
+</body>
+</html>
